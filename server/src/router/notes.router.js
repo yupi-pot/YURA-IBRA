@@ -33,6 +33,20 @@ noteRouter.post("/:id", async (req, res) => {
   }
 });
 
+noteRouter.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { tag, notes } = req.body;
+
+    const findNote = await Notes.findbyPk(id);
+
+    const updateNote = await Notes.update({ tag, notes });
+    res.status(200).json(updateNote);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
+
 noteRouter.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
